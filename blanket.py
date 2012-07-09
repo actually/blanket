@@ -6,9 +6,12 @@ Authors: Nobody worth mentioning
 
 Requires: Python 2.7
           fabric (fabfile.org)
+          cherrypy (cherrypy.org)
+          soaplib (github.com/soaplib)
 """
 
 import os
+import sys
 import signal
 import errno
 
