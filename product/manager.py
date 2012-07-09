@@ -1,5 +1,6 @@
-from soaplib.core.service import soap
-from soaplib.core.server.wsgi import Application
+import soaplib
+from soaplib.core.service import soap, DefinitionBase
+from soaplib.core.server import wsgi
 from soaplib.core.model.primitive import String
 
 from config import config
@@ -10,7 +11,7 @@ import logging
 
 log = logging.getLogger(__name__)
 
-class Blanket(Application):
+class Blanket(DefinitionBase):
     """ Fabric SOAP Interface """
 
     @soap(String, _returns=String)
@@ -22,5 +23,7 @@ class Blanket(Application):
 
 def run():
     from cherrypy.wsgiserver import CherryPyWSGIServer
-    server = CherryPyWSGIServer(('0.0.0.0', config.soap_port), Blanket())
+    soap_application =  soaplib.core.Application([Blanket], 'blanket')
+    wsgi_application = wsgi.Application(soap_application)
+    server = CherryPyWSGIServer(('0.0.0.0', config.soap_port), wsgi_application)
     server.start()

@@ -1,4 +1,3 @@
-
 import logging
 import sys
 
@@ -15,10 +14,14 @@ def setupConfigAndLogging(environment):
 
     handler = logging.FileHandler(config.log_file)
     handler.setFormatter(logging.Formatter(config.log_format))
+    
+    errorHandler = logging.FileHandler(config.out_err_log)
+    errorHandler.setFormatter(logging.Formatter(config.log_format))
 
     root_logger = logging.getLogger("")
     root_logger.setLevel(logging.getLevelName(config.global_log_level))
     root_logger.addHandler(handler)
+    root_logger.addHandler(errorHandler)
 
     for log_path in config.log_levels:
         logger = logging.getLogger(log_path)
