@@ -1,4 +1,3 @@
-
 """
 At this point there is really no reason to run this as a daemon, but maybe someday
 
