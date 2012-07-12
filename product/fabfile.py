@@ -2,12 +2,16 @@
 # or it would, if i had the namespace of 'config' correct
 
 from fabric.operations import sudo
+from fabric.operations import run
 from fabric.api import env
 from fabric.api import settings
 
-from config import config
+import config
 
-env.user = config.blanketUser
+env.user = config.username
+
+def host_type():
+    run('uname -s')
 
 def fix_time():
     sudo('grep -q "pool.ntp.org" /etc/ntp/step-tickers || echo "pool.ntp.org" >> /etc/ntp/step-tickers')
@@ -22,3 +26,4 @@ def clean_icinga():
     with settings(host_string=config.blanketIcinga):
         sudo('/etc/icinga/iconfig/cleanIcinga.sh')
         sudo('/etc/icinga/iconfig/go.sh')
+
