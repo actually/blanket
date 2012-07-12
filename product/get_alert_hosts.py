@@ -1,4 +1,14 @@
 #!/usr/bin/env python
+"""
+Search Icinga Service Status Details
+
+Usage:
+    ./get_alert_hosts.py "Disk Usage"
+        - Returns csv list of hostnames
+
+    $ fab -H $(./get_alert_hosts.py "Puppet client status") fix_puppet
+        - Uses fabric to execute fix_puppet across listed hosts in icinga
+"""
 import re
 import sys
 import requests 
